@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:aasg="http://stategeothermaldata.org/uri-gin/aasg/xmlschema/thermalconductivity/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:gmlsf="http://www.opengis.net/gmlsf" targetNamespace="http://stategeothermaldata.org/uri-gin/aasg/xmlschema/thermalconductivity/2.0" elementFormDefault="qualified" version="02.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gmlsf" schemaLocation="http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsfLevels.xsd"/>
+	<xs:annotation>
+		<!-- This XSD document, including XML schema, indicates the content requested for thermal conductivity measurements obtained for the AASG geothermal data project.  Typically thermal conductivity measurements are obtained to determine the conductivity of heat in the subsurface. The HeaderURI for a particular borehole (well for simple wells) is the cross-referencing link (foreign key) used to associate the header record, well logs, temperature measurements, and other information from a particular borehole.  Each measurement should have a unique ObservationURI. -->
+		<!--This XSD document was created on 2012-03-05 by Celia Coleman, AZGS.  This schema is based on the data available in the AASG Web Feature Services created for the heat flow measurements of samples collected from boreholes and core.  Later versions include samples from the surface. -->
+		<xs:appinfo source="http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsfLevels.xsd">
+			<gmlsf:ComplianceLevel>0</gmlsf:ComplianceLevel>
+			<gmlsf:GMLProfileSchema>
+http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsf.xsd </gmlsf:GMLProfileSchema>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:element name="ThermalConductivity" type="aasg:ThermalConductivityType" substitutionGroup="gml:_Feature"/>
+	<xs:complexType name="ThermalConductivityType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="OBJECTID" type="xs:int" minOccurs="0"/>
+					<xs:element name="ObservationURI">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="ObservationName" type="xs:string"/>
+					<xs:element name="Label" type="xs:string"/>
+					<xs:element name="RelatedSampleURI" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="OtherID" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleDepth" type="xs:double"/>
+					<xs:element name="MeasurementUnits" type="xs:string"/>
+					<xs:element name="SiteLocationURI">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="SiteLocationName" type="xs:string"/>
+					<xs:element name="LocalityTerms" type="xs:string" minOccurs="0"/>
+					<xs:element name="County" type="xs:string"/>
+					<xs:element name="State" type="xs:string"/>
+					<xs:element name="LatDegreeWGS84" type="xs:double"/>
+					<xs:element name="LongDegreeWGS84" type="xs:double"/>
+					<xs:element name="SRS" type="xs:string"/>
+					<xs:element name="LocationUncertaintyStatement" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleCollectionDate" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleMeasurementDate" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleType" type="xs:string"/>
+					<xs:element name="SampleShape" type="xs:string"/>
+					<xs:element name="SampleDimensionsHeight" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleDimensionsWidth" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleDimensionsLength" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleDimensionsUnits" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleDensity" type="xs:double" minOccurs="0"/>
+					<xs:element name="UncertaintyDensity" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleDensityUnits" type="xs:string" minOccurs="0"/>
+					<xs:element name="Laboratory" type="xs:string" minOccurs="0"/>
+					<xs:element name="MeasurementDevice" type="xs:string"/>
+					<xs:element name="MeasurementProcedure" type="xs:string" minOccurs="0"/>
+					<xs:element name="MeasurementPressure" type="xs:double" minOccurs="0"/>
+					<xs:element name="MeasurementPressureUnits" type="xs:string" minOccurs="0"/>
+					<xs:element name="SampleTemperature" type="xs:double" minOccurs="0"/>
+					<xs:element name="SampleTemperatureUnits" type="xs:string" minOccurs="0"/>
+					<xs:element name="MeasurementDuration" type="xs:string" minOccurs="0"/>
+					<xs:element name="MeasurementDirection" type="xs:string" minOccurs="0"/>
+					<xs:element name="MeasurementRun" type="xs:string"/>
+					<xs:element name="BulkMixingFormula" type="xs:string" minOccurs="0"/>
+					<xs:element name="SaturationFluid" type="xs:string" minOccurs="0"/>
+					<xs:element name="SaturatedSampleConductivity" type="xs:string" minOccurs="0"/>
+					<xs:element name="DrySampleConductivity" type="xs:string" minOccurs="0"/>
+					<xs:element name="AverageThermalConductivity" type="xs:double"/>
+					<xs:element name="UncertaintyTC" type="xs:string" minOccurs="0"/>
+					<xs:element name="CorrectionTC" type="xs:double" minOccurs="0"/>
+					<xs:element name="CorrectionDescription" type="xs:string" minOccurs="0"/>
+					<xs:element name="UnitsTC" type="xs:string" minOccurs="0"/>
+					<xs:element name="SpecificHeat" type="xs:double" minOccurs="0"/>
+					<xs:element name="UncertaintySpecificHeat" type="xs:string" minOccurs="0"/>
+					<xs:element name="SpecificHeatUnits" type="xs:string" minOccurs="0"/>
+					<xs:element name="ThermalDiffusivity" type="xs:double" minOccurs="0"/>
+					<xs:element name="UncertaintyThermalDiffusivity" type="xs:string" minOccurs="0"/>
+					<xs:element name="UnitsThermalDiffusivity" type="xs:string" minOccurs="0"/>
+					<xs:element name="GeologicFormationName" type="xs:string"/>
+					<xs:element name="GeologicFormationURI" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="GeologicFormationType" type="xs:string"/>
+					<xs:element name="DatumElevation" type="xs:string" minOccurs="0"/>
+					<xs:element name="Elevation" type="xs:double" minOccurs="0"/>
+					<xs:element name="Permeability" type="xs:double" minOccurs="0"/>
+					<xs:element name="UnitsPermeability" type="xs:string" minOccurs="0"/>
+					<xs:element name="Porosity" type="xs:double" minOccurs="0"/>
+					<xs:element name="Notes" type="xs:string" minOccurs="0"/>
+					<xs:element name="MetadataURI" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Source" type="xs:string"/>
+					<xs:element name="Shape" type="gml:PointPropertyType"/>
+					<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
