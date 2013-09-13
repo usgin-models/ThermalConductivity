@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:aasg="http://stategeothermaldata.org/uri-gin/aasg/xmlschema/thermalconductivity/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:gmlsf="http://www.opengis.net/gmlsf" targetNamespace="http://stategeothermaldata.org/uri-gin/aasg/xmlschema/thermalconductivity/2.0" elementFormDefault="qualified" version="02.0">
+<xs:schema xmlns:aasg="http://stategeothermaldata.org/uri-gin/aasg/xmlschema/thermalconductivity/2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:gmlsf="http://www.opengis.net/gmlsf" targetNamespace="http://stategeothermaldata.org/uri-gin/aasg/xmlschema/thermalconductivity/2.1" elementFormDefault="qualified" version="02.0">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.opengis.net/gmlsf" schemaLocation="http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsfLevels.xsd"/>
 	<xs:annotation>
-		<!-- This XSD document, including XML schema, indicates the content requested for thermal conductivity measurements obtained for the AASG geothermal data project.  Typically thermal conductivity measurements are obtained to determine the conductivity of heat in the subsurface. The HeaderURI for a particular borehole (well for simple wells) is the cross-referencing link (foreign key) used to associate the header record, well logs, temperature measurements, and other information from a particular borehole.  Each measurement should have a unique ObservationURI. -->
-		<!--This XSD document was created on 2012-03-05 by Celia Coleman, AZGS.  This schema is based on the data available in the AASG Web Feature Services created for the heat flow measurements of samples collected from boreholes and core.  Later versions include samples from the surface. -->
+		<!--This XSD document, including XML schema, indicates the content requested for thermal conductivity measurements obtained for the AASG geothermal data project.  Typically thermal conductivity measurements are obtained to determine the conductivity of heat in the subsurface. The HeaderURI for a particular borehole (well for simple wells) is the cross-referencing link (foreign key) used to associate the header record, well logs, temperature measurements, and other information from a particular borehole. Each measurement should have a unique ObservationURI. -->
+		<!--Annotated version 2.1. This XSD document was created on 2012-03-05 by Celia Coleman, AZGS.  This schema is based on the data available in the AASG Web Feature Services created for the heat flow measurements of samples collected from boreholes and core. Later versions include samples from the surface. Field Description annotations standardized 2013-08-22 by Esty Pape, AZGS.-->
 		<xs:appinfo source="http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsfLevels.xsd">
 			<gmlsf:ComplianceLevel>0</gmlsf:ComplianceLevel>
 			<gmlsf:GMLProfileSchema>
@@ -16,101 +16,356 @@ http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsf.xsd </gml
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureType">
 				<xs:sequence>
-					<xs:element name="OBJECTID" type="xs:int" minOccurs="0"/>
+					<xs:element name="OBJECTID" type="xs:int" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Integer record count, added by ArcGIS servers during service deployment; not required but cannot be removed when deploying from ArcGIS feature class. Not user maintained, so this element appears in XML implementation but not in the Content Model Template.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="ObservationURI">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for this observation. This is the identifier (Uniform Resource Identifier) that will be used to cross-reference data, samples, and other observations to the observation represented by this record. Best practice is to define an http URI that will dereference to a normative description of the observation. USGIN URI's may be redirected to any URL using the http://resources.usgin.org redirector; contact the USGIN development team at AZGS for instructions.  </xs:documentation>
+						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:maxLength value="255"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="ObservationName" type="xs:string"/>
-					<xs:element name="Label" type="xs:string"/>
+					<xs:element name="ObservationName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The human-intelligible name for the observation; may be a concatenation of observation type and feature name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Label" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Short text string for labeling the feature on maps. Can be the same as observation name. A label may be an OtherLocationName, OtherID or the Name or some combination.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="RelatedSampleURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>If the thermal conductivity value is based on an average of several samples, multiple observationURIs are listed here, delimited by pipe '|' characters. Recommend use of http URI that will dereference to give representation of sample.</xs:documentation>
+						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:maxLength value="255"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="OtherID" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleDepth" type="xs:double"/>
-					<xs:element name="MeasurementUnits" type="xs:string"/>
+					<xs:element name="OtherID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Alternative identifier(s) for observation or site information. Indicate the authority from which the OtherID is derived with a short (lower case) prefix delimited by a colon ':' If identifiers from multiple different authorities are available, delimit these identifiers with the pipe character '|'. For example, if a well were known to the Arizona Geological Survey (AZGS) by the id number 1337, the identifier string would be azgs:1337. Any such prefixes used to scope identifiers should be explained in the dataset metadata.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleDepth" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>If sample is from the surface enter zero, else put depth of formation sampled.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeasurementUnits" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Valid choices for depth units = Meters or Feet. If depth is reported as 'surface' or 'missing', select 'meters'.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="SiteLocationURI">
+						<xs:annotation>
+							<xs:documentation>Unique identifier that specifies the feature represented: e.g. a geologic feature, aquifer or facility structure. Ideally, the identifier is an http URI that will dereference to a known, useful representation of the feature. This identifier will be used to cross reference the feature to other information related to this feature.</xs:documentation>
+						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:maxLength value="255"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="SiteLocationName" type="xs:string"/>
-					<xs:element name="LocalityTerms" type="xs:string" minOccurs="0"/>
-					<xs:element name="County" type="xs:string"/>
-					<xs:element name="State" type="xs:string"/>
-					<xs:element name="LatDegreeWGS84" type="xs:double"/>
-					<xs:element name="LongDegreeWGS84" type="xs:double"/>
-					<xs:element name="SRS" type="xs:string"/>
-					<xs:element name="LocationUncertaintyStatement" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleCollectionDate" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleMeasurementDate" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleType" type="xs:string"/>
-					<xs:element name="SampleShape" type="xs:string"/>
-					<xs:element name="SampleDimensionsHeight" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleDimensionsWidth" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleDimensionsLength" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleDimensionsUnits" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleDensity" type="xs:double" minOccurs="0"/>
-					<xs:element name="UncertaintyDensity" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleDensityUnits" type="xs:string" minOccurs="0"/>
-					<xs:element name="Laboratory" type="xs:string" minOccurs="0"/>
-					<xs:element name="MeasurementDevice" type="xs:string"/>
-					<xs:element name="MeasurementProcedure" type="xs:string" minOccurs="0"/>
-					<xs:element name="MeasurementPressure" type="xs:double" minOccurs="0"/>
-					<xs:element name="MeasurementPressureUnits" type="xs:string" minOccurs="0"/>
-					<xs:element name="SampleTemperature" type="xs:double" minOccurs="0"/>
-					<xs:element name="SampleTemperatureUnits" type="xs:string" minOccurs="0"/>
-					<xs:element name="MeasurementDuration" type="xs:string" minOccurs="0"/>
-					<xs:element name="MeasurementDirection" type="xs:string" minOccurs="0"/>
-					<xs:element name="MeasurementRun" type="xs:string"/>
-					<xs:element name="BulkMixingFormula" type="xs:string" minOccurs="0"/>
-					<xs:element name="SaturationFluid" type="xs:string" minOccurs="0"/>
-					<xs:element name="SaturatedSampleConductivity" type="xs:string" minOccurs="0"/>
-					<xs:element name="DrySampleConductivity" type="xs:string" minOccurs="0"/>
-					<xs:element name="AverageThermalConductivity" type="xs:double"/>
-					<xs:element name="UncertaintyTC" type="xs:string" minOccurs="0"/>
-					<xs:element name="CorrectionTC" type="xs:double" minOccurs="0"/>
-					<xs:element name="CorrectionDescription" type="xs:string" minOccurs="0"/>
-					<xs:element name="UnitsTC" type="xs:string" minOccurs="0"/>
-					<xs:element name="SpecificHeat" type="xs:double" minOccurs="0"/>
-					<xs:element name="UncertaintySpecificHeat" type="xs:string" minOccurs="0"/>
-					<xs:element name="SpecificHeatUnits" type="xs:string" minOccurs="0"/>
-					<xs:element name="ThermalDiffusivity" type="xs:double" minOccurs="0"/>
-					<xs:element name="UncertaintyThermalDiffusivity" type="xs:string" minOccurs="0"/>
-					<xs:element name="UnitsThermalDiffusivity" type="xs:string" minOccurs="0"/>
-					<xs:element name="GeologicFormationName" type="xs:string"/>
+					<xs:element name="SiteLocationName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Common or human-readable name by which the feature is known. Recommend using only web-safe characters (a-z A-Z 0-9 _-.) in the name. Be consistent in the naming convention used within any given dataset.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LocalityTerms" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Additional information or more geographic names associated with sample collection location; if multiple names supplied, delimit with pipe '|' character, e.g. Arizona | La Paz County | Harquahala Mountains | Browns Canyon.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="County" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Required. County name. If unknown or not applicable use 'missing'. If offshore, specify 'offshore' in this field.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="State" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Required. State name without abbreviations. If unknown or not applicable use 'missing'. For offshore locations, specify the governing or nearest state and list the county as 'offshore'.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LatDegreeWGS84" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Latitude coordinate for the surface location of the feature (use center point for areas); values should be provided with at least 4 significant digits for sufficient precision (7 decimal places is recommended by the USGS (OFR 02-463, p. 6). Use decimal degrees.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LongDegreeWGS84" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Longitude coordinate for the surface location of the feature (use center point for areas); values should be provided with at least 4 significant digits for sufficient precision (7 decimal places is recommended by the USGS (OFR 02-463, p. 6). Use decimal degrees.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SRS" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The spatial reference system. It is recommended that an EPSG code be used to identify the SRS used to specify the location.  If an EPSG code is used, identify it as such with the prefix 'EPSG:' For common EPSG codes, see the Data Valid Terms tab. EPSG:4326 is the identifier for WGS84, and should be the text in this field. EPSG stands for European Petroleum Survey Group. EPSSG codes can be dereferenced by putting the code in this URL (replace 4326) http://spatialreference.org/ref/epsg/4326/.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LocationUncertaintyStatement" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Information on how the original location was determined, e.g.: 1:250,000 map, gps unit, Google Earth, PLSS Conversion, Spatial Datum Conversion, e.g., NAD27 to WGS84.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleCollectionDate" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date for the record (date on which observation, measurement or test was made or specimen was collected. Day, month and year must be specified; Excel will display using ISO 8601 date and time (yyyy-mm-ddT:hh:mm) format. If only the year is known, enter month and day as 'Jan. 1', (or '1/1/', or '1-1-', or 'January 1,'). All dates will be converted to yyyy-mm-ddThh:mm.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleMeasurementDate" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date for the record (date on which observation, measurement or test was made or specimen was collected. Day, month and year must be specified; Excel will display using ISO 8601 date and time (yyyy-mm-ddT:hh:mm) format. If only the year is known, enter month and day as 'Jan. 1', (or '1/1/', or '1-1-', or 'January 1,'). All dates will be converted to yyyy-mm-ddThh:mm.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Type of material used for sample measurement. Category from simple material classification scheme e.g. rock, sediment, liquid, gas, biological material.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleShape" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Shape of sample for measurement: cylinder, square, rectangular, irregular, fine material, coarse material, unknown.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleDimensionsHeight" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Description of sample: height of vertical edge. If using a form for cuttings or unconsolidated measurements, put in the values of the form.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleDimensionsWidth" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Description of sample: width or radius or horizontal edge. If using a form for cuttings or unconsolidated measurements, put in the values of the form.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleDimensionsLength" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Description of sample: length of 2nd horizontal dimension. If using a form for cuttings or unconsolidated measurements, put in the values of the form.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleDimensionsUnits" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Units used for height, length and width: centimeters or inches.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleDensity" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Density of the rock sample or Bulk Density for Crushed/Cutting samples.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="UncertaintyDensity" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Uncertainty of the density of the sample.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleDensityUnits" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Units used for density: grams per cubic centimeters (g/cm3) or pound per cubic inch (lb/in3).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Laboratory" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>If a Laboratory performed the analysis, include name and address here.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeasurementDevice" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Type of analysis performed on sample for the measurement: Divided Bar, Portable Divided Bar, Needle Probe, Half-Space Needle Probe, Laser - Infrared, other, unknown.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeasurementProcedure" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Text description of how the measurement was made - instrumentation, logging rate, correction or extrapolation process, how time since circulation was determined, etc. Data provider should indicate QA/QC performed on the data, including individual or institution, time frame and depth of quality check. If following a paper or standard include reference.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeasurementPressure" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Pressure used on sample during measurement.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeasurementPressureUnits" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Units for Pressure used on sample during measurement. Valid terms include: Bars or p.s.i. (pounds per square inch).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleTemperature" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Temperature, in decimal format, used on sample during measurement. Degrees Celsius is preferred and will be reported for consistency in service implementations.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SampleTemperatureUnits" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Units for Temperature used on sample during measurement. Valid terms include: C (Celsius), F (Fahrenheit), or K (Kelvin).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeasurementDuration" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Duration of time the sample was under pressure at specified temperature (in minutes).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeasurementDirection" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>If sample is anisotropic then describe direction of sample.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeasurementRun" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Total number of measurements made on this sample.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BulkMixingFormula" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Method used to calculate Bulk Conductivity if cuttings or unconsolidated material.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SaturationFluid" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Fluid used with rock/sediment material to fill void spaces and saturate (ie: tap water, oil, etc.).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SaturatedSampleConductivity" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Saturated measured conductivity or in situ value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DrySampleConductivity" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Measured conductivity value of dry rock core or sample.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SiteThermalConductivity" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Determined Thermal Conductivity for sample/formation of rock material.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="UncertaintyTC" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Calculated uncertainty of Thermal Conductivity or Bulk Conductivity value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CorrectionTC" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Correction applied to thermal conductivity for in situ conditions.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CorrectionDescription" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Description of Correction to thermal conductivity.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="UnitsTC" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Reporting units for thermal conductivity measurements; SI (Système International) = watts per meter per Kelvin (W m-1 K-1), or other units.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SpecificHeat" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The amount of heat per unit mass required to raise the temperature by one degree Celsius.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="UncertaintySpecificHeat" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Report uncertainty if reporting specific heat.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SpecificHeatUnits" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Reporting units for specific heat. Common units are: calorie/gram, joule/gram.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ThermalDiffusivity" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>How rapidly a material changes temperature to match the surroundings - equilibrium.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="UncertaintyThermalDiffusivity" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Report uncertainty of thermal diffusivity.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="UnitsThermalDiffusivity" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Reporting units for Thermal Diffusivity are meters squared per second (m2/s).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GeologicFormationName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of geologic unit that was sampled. Include hierarchy of names if the unit is part of a higher-rank geologic unit, e.g. Group name/Formation name, or Formation/Member, or Group/ Formation. Spell out unit names in full.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="GeologicFormationURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for the geologic formation of this record.</xs:documentation>
+						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:maxLength value="255"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="GeologicFormationType" type="xs:string"/>
-					<xs:element name="DatumElevation" type="xs:string" minOccurs="0"/>
-					<xs:element name="Elevation" type="xs:double" minOccurs="0"/>
-					<xs:element name="Permeability" type="xs:double" minOccurs="0"/>
-					<xs:element name="UnitsPermeability" type="xs:string" minOccurs="0"/>
-					<xs:element name="Porosity" type="xs:double" minOccurs="0"/>
-					<xs:element name="Notes" type="xs:string" minOccurs="0"/>
+					<xs:element name="GeologicFormationType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of sample material type, e.g., granite, sandstone, arkose, schist.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DatumElevation" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The point of reference against which elevation measurements are made. Best practice: use mean sea level (MSL) as datum.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Elevation" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Elevation at ground level for the feature. 3 decimal places is recommended by the USGS (OFR 02-463, p.6). Elevations should be reported relative to mean sea level (MSL).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Permeability" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The property or capacity of a porous rock, sediment, or soil for transmitting a fluid; it is a measure of the relative ease of fluid flow under unequal pressure.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="UnitsPermeability" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Units for the reported permability. The SI unit for permeability is m^2. A practical unit for permeability is the darcy (D), or more commonly the millidarcy (mD) (1 darcy \approx10−12/m^2). </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Porosity" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Porosity measures the void or "empty" space in a material; the volume of void over the total volume as a fraction between 0–1. Enter as decimal value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Notes" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Any additional information to be provided, including description and other data not captured by the template, details about collection method, contact information for related parties (original collector, project PI), collection platform or Launch, etc.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="MetadataURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URI identifying (and ideally dereferencing to get) a full formal metadata record for the observation report. A time series of observations may all reference the same metadata record that provides contact information and details on procedure, etc.</xs:documentation>
+						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:maxLength value="255"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="Source" type="xs:string"/>
-					<xs:element name="Shape" type="gml:PointPropertyType"/>
+					<xs:element name="Source" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mandatory. Short text explanation of source of information defining feature; may be author-date type citation, but should include some indication of how digital data originated. If unpublished data, provide researcher name, date and research institution for proper citation. Separate multiple citations with pipe '|' character.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Shape" type="gml:PointPropertyType">
+						<xs:annotation>
+							<xs:documentation>Added by GIS for WFS service; this element appears in the xml output, but is generated during service deployment from the latitude and longitude, therefore it doesn't appear in the template.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
