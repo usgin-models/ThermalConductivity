@@ -4,7 +4,7 @@
 	<xs:import namespace="http://www.opengis.net/gmlsf" schemaLocation="http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsfLevels.xsd"/>
 	<xs:annotation>
 		<!--This XSD document, including XML schema, indicates the content requested for thermal conductivity measurements obtained for the AASG geothermal data project.  Typically thermal conductivity measurements are obtained to determine the conductivity of heat in the subsurface. The HeaderURI for a particular borehole (well for simple wells) is the cross-referencing link (foreign key) used to associate the header record, well logs, temperature measurements, and other information from a particular borehole. Each measurement should have a unique ObservationURI. -->
-		<!--Annotated version 2.1. This XSD document was created on 2012-03-05 by Celia Coleman, AZGS.  This schema is based on the data available in the AASG Web Feature Services created for the heat flow measurements of samples collected from boreholes and core. Later versions include samples from the surface. Field Description annotations standardized 2013-08-22 by Esty Pape, AZGS.-->
+		<!--Version 2.1.1 changed date types to 'dateTIme'. Annotated version 2.1. This XSD document was created on 2012-03-05 by Celia Coleman, AZGS.  This schema is based on the data available in the AASG Web Feature Services created for the heat flow measurements of samples collected from boreholes and core. Later versions include samples from the surface. Field Description annotations standardized 2013-08-22 by Esty Pape, AZGS.-->
 		<xs:appinfo source="http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsfLevels.xsd">
 			<gmlsf:ComplianceLevel>0</gmlsf:ComplianceLevel>
 			<gmlsf:GMLProfileSchema>
@@ -116,12 +116,12 @@ http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsf.xsd </gml
 							<xs:documentation>Information on how the original location was determined, e.g.: 1:250,000 map, gps unit, Google Earth, PLSS Conversion, Spatial Datum Conversion, e.g., NAD27 to WGS84.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="SampleCollectionDate" type="xs:string" minOccurs="0">
+					<xs:element name="SampleCollectionDate" type="xs:dateTime" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Date for the record (date on which observation, measurement or test was made or specimen was collected. Day, month and year must be specified; Excel will display using ISO 8601 date and time (yyyy-mm-ddT:hh:mm) format. If only the year is known, enter month and day as 'Jan. 1', (or '1/1/', or '1-1-', or 'January 1,'). All dates will be converted to yyyy-mm-ddThh:mm.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="SampleMeasurementDate" type="xs:string" minOccurs="0">
+					<xs:element name="SampleMeasurementDate" type="xs:dateTime" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Date for the record (date on which observation, measurement or test was made or specimen was collected. Day, month and year must be specified; Excel will display using ISO 8601 date and time (yyyy-mm-ddT:hh:mm) format. If only the year is known, enter month and day as 'Jan. 1', (or '1/1/', or '1-1-', or 'January 1,'). All dates will be converted to yyyy-mm-ddThh:mm.</xs:documentation>
 						</xs:annotation>
