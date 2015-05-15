@@ -96,12 +96,12 @@ http://schemas.opengis.net/gml/3.1.1/profiles/gmlsfProfile/1.0.0/gmlsf.xsd </gml
 							<xs:documentation>Required. State name without abbreviations. If unknown or not applicable use 'missing'. For offshore locations, specify the governing or nearest state and list the county as 'offshore'.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="LatDegreeWGS84" type="xs:double">
+					<xs:element name="LatDegree" type="xs:double">
 						<xs:annotation>
 							<xs:documentation>Latitude coordinate for the surface location of the feature (use center point for areas); values should be provided with at least 4 significant digits for sufficient precision (7 decimal places is recommended by the USGS (OFR 02-463, p. 6). Use decimal degrees.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="LongDegreeWGS84" type="xs:double">
+					<xs:element name="LongDegree" type="xs:double">
 						<xs:annotation>
 							<xs:documentation>Longitude coordinate for the surface location of the feature (use center point for areas); values should be provided with at least 4 significant digits for sufficient precision (7 decimal places is recommended by the USGS (OFR 02-463, p. 6). Use decimal degrees.</xs:documentation>
 						</xs:annotation>
